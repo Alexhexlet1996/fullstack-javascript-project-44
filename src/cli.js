@@ -1,6 +1,9 @@
 import readlineSync from 'readline-sync'
+
 const toGreet = () => {
-  const userName = readlineSync.question('Your answer: ')
-  return `Hello,${userName}!`
+  let userName = readlineSync.question('Your answer: ')
+  console.log(`Hello, ${userName}!`)
+  return userName
 }
+
 export { toGreet }
