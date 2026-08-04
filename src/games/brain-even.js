@@ -1,10 +1,11 @@
-import readlineSync from 'readline-sync'
+import { askQuestion } from '../index.js'
 const arrayCount = [15, 6, 7]
-let count
+let questionForUser
 const checkingForAnEvenNumber = (userName) => {
   for (let i = 0; i < arrayCount.length; i += 1) {
-    let answer = readlineSync.question(`Question: ${arrayCount[i]}`)
-    count = arrayCount[i]
+    questionForUser = arrayCount[i]
+
+    let answer = askQuestion(questionForUser)
     if (arrayCount[i] % 2 === 0 && answer === 'yes') {
       console.log('Your answer: yes')
       console.log('Correct!')
@@ -14,19 +15,19 @@ const checkingForAnEvenNumber = (userName) => {
       console.log('Correct!')
     }
     else {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${choosingTheCorrectAnswer(count)}'.\n Let's try again, ${userName}!`)
+      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${choosingTheCorrectAnswer(questionForUser)}'.\n Let's try again, ${userName}!`)
       return
     }
   }
   return console.log(`Congratulations, ${userName}!`)
 }
 
-const choosingTheCorrectAnswer = (count) => {
+const choosingTheCorrectAnswer = (questionForUser) => {
   let rightAnswer
-  if (count % 2 === 0) {
+  if (questionForUser % 2 === 0) {
     rightAnswer = 'yes'
   }
-  else if (count % 2 !== 0) {
+  else if (questionForUser % 2 !== 0) {
     rightAnswer = 'no'
   }
   return rightAnswer
