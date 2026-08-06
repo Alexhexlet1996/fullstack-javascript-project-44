@@ -1,9 +1,10 @@
 import _ from 'lodash'
 import { askQuestion } from '../index.js'
+import { interactWithTheUser } from '../index.js'
 
 export const countingNumbers = (userName) => {
-  const numberOfQuestions = 3
-  for (let i = 0; i < numberOfQuestions; i += 1) {
+  const theNumberOfRounds = 3
+  for (let i = 0; i < theNumberOfRounds; i += 1) {
     let firstNumber
     let secondNumber
     firstNumber = _.random(0, 100)
@@ -17,16 +18,11 @@ export const countingNumbers = (userName) => {
     let randomOperand = _.sample(arrayOperand)
 
     let rightAnswer = countingTheCorrectValue(firstNumber, secondNumber, randomOperand)
-
     let questionForUser = `${firstNumber} ${randomOperand} ${secondNumber}`
-    let answer = askQuestion(questionForUser)
-
-    if (Number(answer) === rightAnswer) {
-      console.log(`Your answer: ${answer}`)
-      console.log('Correct!')
-    }
-    else {
-      return console.log(`'${answer}' is wrong answer ;(. Correct answer was '${rightAnswer}'.\n Let's try again, ${userName}!`)
+    let answer = Number(askQuestion(questionForUser))
+    let stop = Number(interactWithTheUser(answer, rightAnswer, userName))
+    if (stop === 1) {
+      return
     }
   }
   return console.log(`Congratulations, ${userName}!`)

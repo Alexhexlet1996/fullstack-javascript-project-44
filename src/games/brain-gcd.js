@@ -1,22 +1,18 @@
 import _ from 'lodash'
 import { askQuestion } from '../index.js'
+import { interactWithTheUser } from '../index.js'
 
 export const findGreaCommDivisor = (userName) => {
-  let count1
-  let count2
   const theNumberOfRounds = 3
   for (let n = 0; n < theNumberOfRounds; n += 1) {
-    count1 = _.random(0, 100)
-    count2 = _.random(0, 100)
-    let rightAnswer = determiningTheCorrectAnswer(count1, count2)
+    let count1 = _.random(0, 100)
+    let count2 = _.random(0, 100)
+    let rightAnswer = Number(determiningTheCorrectAnswer(count1, count2))
     let questionForUser = `${count1} ${count2}`
-    let answer = askQuestion(questionForUser)
-    if (Number(answer) === rightAnswer) {
-      console.log(`Your answer: ${answer}`)
-      console.log('Correct!')
-    }
-    else {
-      return console.log(`'${answer}' is wrong answer ;(. Correct answer was '${rightAnswer}'.\n Let's try again, ${userName}!`)
+    let answer = Number(askQuestion(questionForUser))
+    let stop = Number(interactWithTheUser(answer, rightAnswer, userName))
+    if (stop === 1) {
+      return
     }
   }
   return console.log(`Congratulations, ${userName}!`)

@@ -1,33 +1,28 @@
+import _ from 'lodash'
 import { askQuestion } from '../index.js'
-const arrayCount = [15, 6, 7]
-let questionForUser
-const checkingForAnEvenNumber = (userName) => {
-  for (let i = 0; i < arrayCount.length; i += 1) {
-    questionForUser = arrayCount[i]
+import { interactWithTheUser } from '../index.js'
 
+const checkingForAnEvenNumber = (userName) => {
+  const theNumberOfRounds = 3
+  for (let i = 0; i < theNumberOfRounds; i += 1) {
+    let randomCount = _.random(0, 100)
+    let rightAnswer = choosingTheCorrectAnswer(randomCount)
+    let questionForUser = `${randomCount}`
     let answer = askQuestion(questionForUser)
-    if (arrayCount[i] % 2 === 0 && answer === 'yes') {
-      console.log('Your answer: yes')
-      console.log('Correct!')
-    }
-    else if (arrayCount[i] % 2 !== 0 && answer === 'no') {
-      console.log('Your answer: no')
-      console.log('Correct!')
-    }
-    else {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${choosingTheCorrectAnswer(questionForUser)}'.\n Let's try again, ${userName}!`)
+    let stop = Number(interactWithTheUser(answer, rightAnswer, userName))
+    if (stop === 1) {
       return
     }
   }
   return console.log(`Congratulations, ${userName}!`)
 }
 
-const choosingTheCorrectAnswer = (questionForUser) => {
+const choosingTheCorrectAnswer = (randomCount) => {
   let rightAnswer
-  if (questionForUser % 2 === 0) {
+  if (randomCount % 2 === 0) {
     rightAnswer = 'yes'
   }
-  else if (questionForUser % 2 !== 0) {
+  else if (randomCount % 2 !== 0) {
     rightAnswer = 'no'
   }
   return rightAnswer
